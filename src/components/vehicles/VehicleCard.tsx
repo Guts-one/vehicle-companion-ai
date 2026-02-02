@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Vehicle, VehicleDocument } from '@/types/vehicle';
 import { cn } from '@/lib/utils';
+import { useVehicleDocument } from '@/hooks/useVehicles';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -11,10 +12,13 @@ interface VehicleCardProps {
 }
 
 export function VehicleCard({ vehicle, document }: VehicleCardProps) {
+  const { data: fetchedDocument } = useVehicleDocument(document ? undefined : vehicle.id);
+  const resolvedDocument = document ?? fetchedDocument;
+
   const getDocumentStatus = () => {
-    if (!document) return null;
+    if (!resolvedDocument) return null;
     
-    switch (document.status) {
+    switch (resolvedDocument.status) {
       case 'ready':
         return {
           label: 'PDF pronto',
@@ -75,7 +79,7 @@ export function VehicleCard({ vehicle, document }: VehicleCardProps) {
                 </Badge>
               )}
               
-              {!document && (
+              {!resolvedDocument && (
                 <Badge variant="outline" className="gap-1.5 text-xs text-muted-foreground">
                   <FileText className="h-3 w-3" />
                   Sem PDF

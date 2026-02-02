@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-4. Abra o endereco exibido no terminal (normalmente `http://localhost:5173`).
+4. Abra o endereco exibido no terminal (normalmente `http://localhost:8080`).
 
 ## Dicas de uso
 
